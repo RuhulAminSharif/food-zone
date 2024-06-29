@@ -15,7 +15,11 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/venobox.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/animate.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/jquery.exzoom.css') }}">
+<<<<<<< HEAD
     <link rel="stylesheet" href="{{ asset('frontend/css/toastr.min.css') }}">
+=======
+    <link rel="stylesheet" href="{{ asset('frontend/css/toastr.min.css')}}">
+>>>>>>> main
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
     <!-- <link rel="stylesheet" href="css/rtl.css"> -->
