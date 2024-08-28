@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>General Dashboard &mdash; Stisla</title>
 
     <!-- General CSS Files -->
@@ -62,11 +63,14 @@
 
     <script src="{{ asset('admin/assets/js/toastr.min.js') }}"></script>
     <script src="{{ asset('admin/assets/modules/upload-preview/assets/js/jquery.uploadPreview.min.js') }}"></script>
+    <script src="//cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Template JS File -->
     <script src="{{ asset('admin/assets/js/scripts.js') }}"></script>
     <script src="{{ asset('admin/assets/js/custom.js') }}"></script>
-    <script src="//cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+
+
 
     <!-- show dynamic validation message-->
     <script>
@@ -89,6 +93,55 @@
             no_label: false, // Default: false
             success_callback: null // Default: null
         });
+
+         //set csrf at ajax header
+        // $.ajaxSetup({
+          //  headers: {
+           //     'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+          //  }
+       // });
+
+        $(document).ready(function() {
+            $('body').on('click','.delete-item',function(e){
+            e.preventDefault()
+            let url = $(this).attr('href');
+
+            Swal.fire({
+             title: 'Are you sure?',
+             text: "You won't be able to revert this!",
+             icon:'warning',
+             showCancelButton: true,
+             confirmButtonColor: '#3085d6',
+             cancelButtonColor: '#d33',
+             confirmButtonText:'Yes, delete it!'}).then((result) => {
+                if (result.isConfirmed) {
+
+                   $.ajax({
+                    method: 'DELETE',
+                    url: url,
+                    data: {_token: "{{ csrf_token() }}"},
+                    success:function(response) {
+                        if(response.status === 'success'){
+                            toastr.success(response.message)
+
+                            window.location.reload();
+
+                        }else if(response.status === 'error'){
+                            toastr.error(response.message)
+                        }
+
+                    },
+                    error: function(error){
+                        console.error(error);
+                    }
+                })
+
+            }
+          })
+    })
+
+
+ })
     </script>
 
     @stack('scripts')

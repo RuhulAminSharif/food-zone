@@ -24,11 +24,21 @@ class SliderDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('action', function($query){
                 $edit = "<a href='".route('admin.slider.edit',$query->id)."' class='btn btn-primary'><i class='fas fa-edit'></i></a>";
-                  $delete = "<a href='' class='btn btn-danger ml-2'><i class='fas fa-trash'></i></a>";
+                  $delete = "<a href='".route('admin.slider.destroy', $query->id)."' class='btn btn-danger delete-item ml-2'><i class='fas fa-trash'></i></a>";
 
                   return $edit.$delete;
 
+            })->addColumn('image',function($query){
+                return '<img width="100px" src="'.asset($query->image).'">';
+            })->addColumn('status', function($query){
+                if($query->status ===1){
+                   return '<span class="badge badge-primary">Active</span>';
+                }else {
+                    return '<span class="badge badge-danger">Inactive</span>';
+                }
+
             })
+            ->rawColumns(['image', 'action', 'status'])
             ->setRowId('id');
     }
 
@@ -50,7 +60,7 @@ class SliderDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -68,9 +78,10 @@ class SliderDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
-            Column::make('image'),
+            Column::make('id')->width(60),
+            Column::make('image')->width(100),
             Column::make('title'),
+            Column::make('status'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
