@@ -39,4 +39,5 @@ trait FileUploadTrait
             File::delete(public_path($path));
         }
     }
+
 }
