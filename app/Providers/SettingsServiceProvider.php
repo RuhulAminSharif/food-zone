@@ -5,7 +5,7 @@ namespace App\Providers;
 use App\Services\SettingsService;
 use Illuminate\Support\ServiceProvider;
 
-class SettingServiceProvider extends ServiceProvider
+class SettingsServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
