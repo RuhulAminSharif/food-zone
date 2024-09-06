@@ -45,4 +45,30 @@
             }
         })
     }
+
+    /** Remove cart product from sidebar*/
+    function removeProductFromSidebar($rowId) {
+        $.ajax({
+            method: 'GET',
+            url: '{{ route('cart-product-remove', ':rowId') }}'.replace(":rowId", $rowId),
+            beforeSend: function() {
+                $('.overlay-container').removeClass('d-none');
+                $('.overlay').addClass('active');
+            },
+            success: function(responce) {
+                if (responce.status === 'success') {
+                    updateSidebarCart(function() {
+                        toastr.success(responce.message);
+                        $('.overlay').removeClass('active');
+                        $('.overlay-container').addClass('d-none');
+                    })
+                }
+            },
+            error: function(xhr, status, error) {
+                let errorMessage = xhr.responseJSON.message;
+                toastr.error(errorMessage);
+            }
+
+        })
+    }
 </script>
