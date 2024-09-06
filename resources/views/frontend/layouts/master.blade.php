@@ -9,7 +9,7 @@
 
     <title>Food-Zone|| Restaurant Template</title>
     <link rel="icon" type="image/png" href="images/favicon.png">
-    <link rel="stylesheet" href="{{asset ('frontend/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/spacing.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/slick.css') }}">
@@ -22,10 +22,35 @@
 
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
     <!-- <link rel="stylesheet" href="css/rtl.css"> -->
 </head>
 
 <body>
+
+    <div class="overlay-container d-none">
+        <div class="overlay">
+            <span class="loader"></span>
+        </div>
+    </div>
+
+    <!--=============================
+        Cart Popup Modal Start
+    ==============================-->
+    <div class="fp__cart_popup">
+        <div class="modal fade" id="cartModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body load_product_modal_body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--=============================
+        Cart Popup Modal End
+    ==============================-->
 
     <!--=============================
         TOPBAR START
@@ -59,18 +84,18 @@
     <!--=============================
         MENU START
     ==============================-->
-      @include('frontend.layouts.menu')
+    @include('frontend.layouts.menu')
     <!--=============================
         MENU END
     ==============================-->
 
 
-       @yield('content')
+    @yield('content')
 
     <!--=============================
         FOOTER START
     ==============================-->
-        @include('frontend.layouts.footer')
+    @include('frontend.layouts.footer')
     <!--=============================
         FOOTER END
     ==============================-->
@@ -119,9 +144,9 @@
     <!--show dynamic validation message-->
     <script>
         toastr.options.progressBar = true;
-        
-        @if ($errors -> any())
-            @foreach ( $errors ->all() as $error )
+
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
                 toastr.error("{{ $error }}")
             @endforeach
         @endif
@@ -129,10 +154,17 @@
         //set csrf at ajax header
         $.ajaxSetup({
             headers: {
-                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        // $(document).ready(function() {
+        //     $('.button-click').click();
+        // })
     </script>
+
+    @include('frontend.layouts.global-scripts')
+
     @stack('scripts')
 </body>
 

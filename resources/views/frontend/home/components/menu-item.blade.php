@@ -36,8 +36,6 @@
                     ])
                         ->orderBy('id', 'DESC')
                         ->take(8)
-                        // ->withAvg('reviews', 'rating')
-                        // ->withCount('reviews')
                         ->get();
 
                 @endphp
@@ -48,23 +46,15 @@
                             <div class="fp__menu_item_img">
                                 <img src="{{ asset($product->thumb_image) }}" alt="{{ $product->name }}"
                                     class="img-fluid w-100">
-                                <a class="category" href="#">{{ @$product->category -> name }}</a>
+                                <a class="category" href="#">{{ @$product->category->name }}</a>
                             </div>
                             <div class="fp__menu_item_text">
-                                {{-- @if ($product->reviews_avg_rating)
-                                    <p class="rating">
-                                        @for ($i = 1; $i <= $product->reviews_avg_rating; $i++)
-                                            <i class="fas fa-star"></i>
-                                        @endfor
-
-                                        <span>{{ $product->reviews_count }}</span>
-                                    </p>
-                                @endif --}}
-                                <a class="title" href="{{ route('product.show', $product->slug) }}">{{ $product->name }}</a>
+                                <a class="title"
+                                    href="{{ route('product.show', $product->slug) }}">{{ $product->name }}</a>
                                 <h5 class="price">
                                     @if ($product->offer_price > 0)
                                         {{ currencyPosition($product->offer_price) }}
-                                        <del> {{  currencyPosition($product->price) }}</del>
+                                        <del> {{ currencyPosition($product->price) }}</del>
                                     @else
                                         {{ currencyPosition($product->price) }}
                                     @endif
