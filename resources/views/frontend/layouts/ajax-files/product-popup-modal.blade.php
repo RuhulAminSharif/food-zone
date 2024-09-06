@@ -142,5 +142,44 @@
             $('#total_price').text("{{ config('settings.site_currency_icon') }}" + totalPrice);
 
         }
+
+        // Add to cart function
+        $("#modal_add_to_cart_form").on('submit', function(e) {
+            e.preventDefault();
+
+            // Validation
+            let selectedSize = $("input[name='product_size']");
+            if (selectedSize.length > 0) {
+                if ($("input[name='product_size']:checked").val() === undefined) {
+                    toastr.error('Please select a size');
+                    console.error('Please select a size');
+                    return;
+                }
+            }
+
+            let formData = $(this).serialize();
+            $.ajax({
+                method: 'POST',
+                url: '{{ route('add-to-cart') }}',
+                data: formData,
+                beforeSend: function() {
+                    $('.modal_cart_button').attr('disabled', true);
+                    $('.modal_cart_button').html(
+                        '<span class="spinner-border spinner-border-sm text-light" role="status" aria-hidden="true"></span> Loading...'
+                        )
+                },
+                success: function(response) {
+                    toastr.success(response.message);
+                },
+                error: function(xhr, status, error) {
+                    let errorMessage = xhr.responseJSON.message;
+                    toastr.error(errorMessage);
+                },
+                complete: function() {
+                    $('.modal_cart_button').html('Add to Cart');
+                    $('.modal_cart_button').attr('disabled', false);
+                }
+            })
+        })
     })
 </script>
