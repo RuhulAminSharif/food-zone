@@ -69,5 +69,9 @@ class CartController extends Controller
         }
     }
 
+    function getCartProduct() {
+        return view('frontend.layouts.ajax-files.sidebar-cart-item')->render();
+    }
+
     
 }
