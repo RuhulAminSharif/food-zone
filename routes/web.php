@@ -38,3 +38,17 @@ Route::get('/load-product-modal/{productId}', [FrontendController::class, 'loadP
 Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
 Route::get('get-cart-products', [CartController::class, 'getCartProduct'])->name('get-cart-products');
 Route::get('cart-product-remove/{rowId}', [CartController::class, 'cartProductRemove'])->name('cart-product-remove');
+
+/** Cart Page Route**/
+Route::get('/cart',[CartController::class,'index'])->name('cart.index');
+Route::post('/cart-update-qty',[CartController::class,'cartQtyUpdate'])->name('cart.quantity-update');
+Route::get('/cart-destroy',[CartController::class,'cartDestroy'])->name('cart.destroy');
+
+/** Coupon Routes */
+Route::post('/apply-coupon', [FrontendController::class, 'applyCoupon'])->name('apply-coupon');
+Route::get('/destroy-coupon', [FrontendController::class, 'destroyCoupon'])->name('destroy-coupon');
+
+//Route::group(['middleware' => 'auth'], function(){
+   // Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+   /// Route::get('checkout/{id}/delivery-cal', [CheckoutController::class, 'CalculateDeliveryCharge'])->name('checkout.delivery-cal');
+   // Route::post('checkout', [CheckoutController::class, 'checkoutRedirect'])->name('checkout.redirect');

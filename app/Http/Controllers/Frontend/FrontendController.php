@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\SectionTitle;
 use App\Models\Slider;
 use App\Models\WhyChooseUs;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 
 class FrontendController extends Controller
@@ -56,5 +58,36 @@ class FrontendController extends Controller
         $product = Product::with(['productSizes', 'productOptions'])->findOrFail($productId);
 
         return view('frontend.layouts.ajax-files.product-popup-modal', compact('product'))->render();
+    }
+
+    function applyCoupon(Request $request) {
+
+        $subtotal = $request->subtotal;
+        $code = $request->code;
+
+        $coupon = Coupon::where('code', $code)->first();
+
+        if(!$coupon) {
+            return response(['message' => 'Invalid Coupon Code.'], 422);
+        }
+        if($coupon->quantity <= 0){
+            return response(['message' => 'Coupon has been fully redeemed.'], 422);
+        }
+        if($coupon->expire_date < now()){
+            return response(['message' => 'Coupon hs expired.'], 422);
+        }
+
+        if($coupon->discount_type === 'percent') {
+            $discount = number_format($subtotal * ($coupon->discount / 100), 2);
+        }elseif ($coupon->discount_type === 'amount'){
+            $discount = number_format($coupon->discount, 2);
+        }
+
+        $finalTotal = $subtotal - $discount;
+
+        session()->put('coupon', ['code' => $code, 'discount' => $discount]);
+
+        return response(['message' => 'Coupon Applied Successfully.', 'discount' => $discount, 'finalTotal' => $finalTotal, 'coupon_code' => $code]);
+
     }
 }

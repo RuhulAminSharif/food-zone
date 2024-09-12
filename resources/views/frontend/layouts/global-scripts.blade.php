@@ -1,4 +1,18 @@
 <script>
+
+    /** show loader*/
+    function showLoader(){
+        $('.overlay-container').removeClass('d-none');
+        $('.overlay').addClass('active')
+    }
+
+    /** hide loader*/
+    function hideLoader(){
+        $('.overlay').removeClass('active');
+        $('.overlay-container').addClass('d-none');
+    }
+
+
     /** Load product modal**/
     function loadProductModal(productId) {
         $.ajax({
@@ -71,4 +85,11 @@
 
         })
     }
+    /** get current cart total amount*/
+
+function getCartTotal(){
+    return parseInt("{{ cartTotal() }}");
+}
+
+
 </script>

@@ -5,14 +5,18 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Cart;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
+use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 class CartController extends Controller
 {
 
-    // function index() : View {
-    //     return view('frontend.pages.cart-view');
-    // }
+     function index() : View {
+        return view('frontend.pages.cart-view');
+     }
 
     /**
      *  Add product in to cart
@@ -20,9 +24,9 @@ class CartController extends Controller
     function addToCart(Request $request)
     {
         $product = Product::with(['productSizes', 'productOptions'])->findOrFail($request->product_id);
-        // if($product->quantity < $request->quantity){
-        //     throw ValidationException::withMessages(['Quantity is not available!']);
-        // }
+         if($product->quantity < $request->quantity){
+            throw ValidationException::withMessages(['Quantity is not available!']);
+        }
 
         try {
             $productSize = $product->productSizes->where('id', $request->product_size)->first();
@@ -86,4 +90,35 @@ class CartController extends Controller
             return response(['status' => 'error', 'message' => 'Sorry something went wrong!'], 500);
         }
     }
+
+    function cartQtyUpdate(Request $request) : Response {
+        $cartItem = Cart::get($request->rowId);
+        $product = Product::findOrFail($cartItem->id);
+
+        if($product->quantity < $request->qty){
+            return response(['status' => 'error', 'message' => 'Quantity is not available!', 'qty' => $cartItem->qty]);
+        }
+
+        try{
+            $cart = Cart::update($request->rowId, $request->qty);
+            return response([
+                'status' => 'success',
+                'product_total' => productTotal($request->rowId),
+                'qty' => $cart->qty,
+                'cart_total' => cartTotal(),
+                'grand_cart_total' => grandCartTotal()
+            ], 200);
+
+        }catch(\Exception $e){
+            logger($e);
+            return response(['status' => 'error', 'message' => 'Something went wrong please reload the page.'], 500);
+        }
+    }
+    function cartDestroy() {
+        Cart::destroy();
+        session()->forget('coupon');
+        return redirect()->back();
+    }
 }
+
+
