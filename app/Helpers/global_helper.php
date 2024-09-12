@@ -61,7 +61,7 @@ if (!function_exists('productTotal')) {
     {
         $total = 0;
 
-            $product = Cart::get(rowId);
+            $product = Cart::get($rowId);
 
             $productPrice = $product->price;
             $sizePrice = $product->options?->product_size['price'] ?? 0;

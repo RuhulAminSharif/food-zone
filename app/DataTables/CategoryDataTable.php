@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class CouponDataTable extends DataTable
+class CategoryDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -23,19 +23,26 @@ class CouponDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function($query){
-                $edit = "<a href='".route('admin.coupon.edit', $query->id)."' class='btn btn-primary'><i class='fas fa-edit'></i></a>";
-                $delete = "<a href='".route('admin.coupon.destroy', $query->id)."' class='btn btn-danger delete-item ml-2'><i class='fas fa-trash'></i></a>";
+                $edit = "<a href='".route('admin.category.edit', $query->id)."' class='btn btn-primary'><i class='fas fa-edit'></i></a>";
+                $delete = "<a href='".route('admin.category.destroy', $query->id)."' class='btn btn-danger delete-item ml-2'><i class='fas fa-trash'></i></a>";
 
                 return $edit.$delete;
             })
-            ->addColumn('status', function ($query) {
-                if ($query->status === 1) {
+            ->addColumn('show_at_home', function($query){
+                if($query->show_at_home === 1){
+                    return '<span class="badge badge-primary">Yes</span>';
+                }else {
+                    return '<span class="badge badge-danger">No</span>';
+                }
+            })
+            ->addColumn('status', function($query){
+                if($query->status === 1){
                     return '<span class="badge badge-primary">Active</span>';
-                } else {
+                }else {
                     return '<span class="badge badge-danger">Inactive</span>';
                 }
             })
-            ->rawColumns(['action', 'status'])
+            ->rawColumns(['show_at_home', 'status', 'action'])
             ->setRowId('id');
     }
 
@@ -78,19 +85,13 @@ class CouponDataTable extends DataTable
 
             Column::make('id'),
             Column::make('name'),
-            Column::make('code'),
-            Column::make('quantity'),
-            Column::make('discount_type'),
-            Column::make('discount'),
-            Column::make('expire_date'),
+            Column::make('show_at_home'),
             Column::make('status'),
-
-
             Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->width(150)
-                ->addClass('text-center'),
+            ->exportable(false)
+            ->printable(false)
+            ->width(150)
+            ->addClass('text-center'),
         ];
     }
 

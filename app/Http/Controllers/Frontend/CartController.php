@@ -14,9 +14,9 @@ use Illuminate\View\View;
 class CartController extends Controller
 {
 
-     function index() : View {
+    function index() : View {
         return view('frontend.pages.cart-view');
-     }
+    }
 
     /**
      *  Add product in to cart
@@ -24,7 +24,7 @@ class CartController extends Controller
     function addToCart(Request $request)
     {
         $product = Product::with(['productSizes', 'productOptions'])->findOrFail($request->product_id);
-         if($product->quantity < $request->quantity){
+        if($product->quantity < $request->quantity){
             throw ValidationException::withMessages(['Quantity is not available!']);
         }
 
