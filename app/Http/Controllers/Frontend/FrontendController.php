@@ -91,3 +91,14 @@ class FrontendController extends Controller
 
     }
 }
+function destroyCoupon() {
+    try{
+        session()->forget('coupon');
+        return response(['message' => 'Coupon Removed!', 'grand_cart_total' => grandCartTotal()]);
+    }catch(\Exception $e){
+        logger($e);
+        return response(['message' => 'Something went wrong']);
+
+    }
+}
+

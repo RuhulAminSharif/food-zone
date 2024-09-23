@@ -84,7 +84,7 @@ class CartController extends Controller
                 'status' => 'success',
                 'message' => 'Item has been removed!',
                 'cart_total' => cartTotal(),
-                // 'grand_cart_total' => grandCartTotal()
+                'grand_cart_total' => grandCartTotal()
             ], 200);
         }catch(\Exception $e){
             return response(['status' => 'error', 'message' => 'Sorry something went wrong!'], 500);
