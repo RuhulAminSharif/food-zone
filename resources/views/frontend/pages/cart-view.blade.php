@@ -206,7 +206,7 @@
 
                 inputField.val(currentValue - 1);
 
-                if (inputField.val() > 1) {
+                if (inputField.val() >= 1) {
 
                     cartQtyUpdate(rowId, inputField.val(), function(response) {
                         if (response.status === 'success') {
@@ -230,6 +230,9 @@
                         }
 
                     });
+                }
+                else{
+                    toastr.error("You can't decrement, you should remove the product");
                 }
             });
 
