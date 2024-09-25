@@ -49,7 +49,7 @@ class DashboardController extends Controller
 
         toastr()->success('Updated Successfully');
 
-        return to_route('admin.dashboard');
+        return redirect()->back();
     }
     function destroyAddress(string $id) {
         $address = Address::findOrFail($id);
