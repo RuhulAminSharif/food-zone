@@ -36,11 +36,11 @@ class CheckoutController extends Controller
 
         $address = Address::with('deliveryArea')->findOrFail($request->id);
 
-        $selectedAddress = $address->address.', Aria: '. $address->deliveryArea?->area_name;
+        $selectedAddress = $address->address.', Area: '. $address->deliveryArea?->area_name;
 
         session()->put('address', $selectedAddress);
         session()->put('delivery_fee', $address->deliveryArea->delivery_fee);
-        session()->put('address_id', $address->id);
+        session()->put('address_id', $address->id);  
 
 
         return response(['redirect_url' => route('payment.index')]);

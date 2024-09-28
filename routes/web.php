@@ -2,11 +2,11 @@
 
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
-
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\DashboardController;
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +18,7 @@ Route::group(['middleware' => 'guest'], function () {
 
 
 Route::group(['middleware' => 'auth'],function(){
-     Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
+    Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
     Route::put('profile',[ProfileController::class, 'updateProfile'])->name('profile.update');
     Route::put('profile/password',[ProfileController::class, 'updatePassword'])->name('profile.password.update');
     Route::post('profile/avatar',[ProfileController::class, 'updateAvatar'])->name('profile.avatar.update');
@@ -59,6 +59,25 @@ Route::get('/destroy-coupon', [FrontendController::class, 'destroyCoupon'])->nam
 Route::group(['middleware' => 'auth'], function(){
     Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::get('checkout/{id}/delivery-cal', [CheckoutController::class, 'CalculateDeliveryCharge'])->name('checkout.delivery-cal');
+
     Route::post('checkout', [CheckoutController::class, 'checkoutRedirect'])->name('checkout.redirect');
+
+    /** Payment Routes */
+    Route::get('payment', [PaymentController::class, 'index'])->name('payment.index');
+    Route::post('make-payment', [PaymentController::class, 'makePayment'])->name('make-payment');
+
+    Route::get('payment-success', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
+    Route::get('payment-cancel', [PaymentController::class, 'paymentCancel'])->name('payment.cancel');
+
+    /** PayPal Routes */
+    Route::get('paypal/payment', [PaymentController::class, 'payWithPaypal'])->name('paypal.payment');
+    Route::get('paypal/success', [PaymentController::class, 'paypalSuccess'])->name('paypal.success');
+    Route::get('paypal/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
+
+    /** Stripe Routes */
+    Route::get('stripe/payment', [PaymentController::class, 'payWithStripe'])->name('stripe.payment');
+    Route::get('stripe/success', [PaymentController::class, 'stripeSuccess'])->name('stripe.success');
+    Route::get('stripe/cancel', [PaymentController::class, 'stripeCancel'])->name('stripe.cancel');
+
 
 });
