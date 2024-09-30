@@ -16,8 +16,7 @@ use Stripe\Checkout\Session as StripeSession;
 
 class PaymentController extends Controller
 {
-    function index(): View
-    {
+    function index(): View {
         if (!session()->has('delivery_fee') || !session()->has('address')) {
             throw ValidationException::withMessages(['Something went wrong']);
         }
@@ -42,8 +41,7 @@ class PaymentController extends Controller
         return view('frontend.pages.payment-cancel');
     }
 
-    function makePayment(Request $request, OrderService $orderService)
-    {
+    function makePayment(Request $request, OrderService $orderService) {
         $request->validate([
             'payment_gateway' => ['required', 'string', 'in:paypal,stripe,razorpay']
         ]);
@@ -67,8 +65,7 @@ class PaymentController extends Controller
     }
 
     /** Paypal Payment  */
-    function setPaypalConfig(): array
-    {
+    function setPaypalConfig(): array {
         $config = [
             'mode'    => config('gatewaySettings.paypal_account_mode'), // Can only be 'sandbox' Or 'live'. If empty or invalid, 'live' will be used.
             'sandbox' => [
@@ -92,8 +89,7 @@ class PaymentController extends Controller
         return $config;
     }
 
-    function payWithPaypal()
-    {
+    function payWithPaypal() {
         $config = $this->setPaypalConfig();
         $provider = new PayPalClient($config);
         $provider->getAccessToken();
@@ -129,8 +125,7 @@ class PaymentController extends Controller
         }
     }
 
-    function paypalSuccess(Request $request, OrderService $orderService)
-    {
+    function paypalSuccess(Request $request, OrderService $orderService) {
         $config = $this->setPaypalConfig();
         $provider = new PayPalClient($config);
         $provider->getAccessToken();
@@ -162,8 +157,7 @@ class PaymentController extends Controller
         }
     }
 
-    function paypalCancel()
-    {
+    function paypalCancel() {
         $this->transactionFailUpdateStatus('PayPal');
         return redirect()->route('payment.cancel');
     }
@@ -230,6 +224,7 @@ class PaymentController extends Controller
         $this->transactionFailUpdateStatus('Stripe');
         return redirect()->route('payment.cancel');
     }
+
     function transactionFailUpdateStatus($gatewayName) : void {
         $orderId = session()->get('order_id');
         $paymentInfo = [

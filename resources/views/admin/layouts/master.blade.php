@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}" /><meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>General Dashboard &mdash; Stisla</title>
+    <title>Food Zone &mdash; Admin</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('admin/assets/modules/bootstrap/css/bootstrap.min.css') }}">
@@ -100,13 +100,6 @@
             no_label: false, // Default: false
             success_callback: null // Default: null
         });
-
-         //set csrf at ajax header
-        // $.ajaxSetup({
-          //  headers: {
-           //     'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-          //  }
-       // });
 
         $(document).ready(function() {
             $('body').on('click','.delete-item',function(e){

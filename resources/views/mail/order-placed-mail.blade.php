@@ -257,10 +257,11 @@
                                                 width="100%" style="max-width:300px;">
                                                 <tr>
                                                     <td align="left" valign="top"
-                                                        style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; text-align:left;">
+                                                        style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; text-align:right;">
                                                         <p style="font-weight: 800;">Estimated Delivery Time</p>
-                                                        <p>{{ @$order->deliveryArea->min_delivery_time }} -
-                                                            {{ @$order->deliveryArea->max_delivery_time }}</p>
+                                                        <p>{{ @$order->userAddress->deliveryArea->min_delivery_time }} -
+                                                            {{ @$order->userAddress->deliveryArea->max_delivery_time }}
+                                                        </p>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -279,26 +280,6 @@
                                     <td align="center">
                                         <img src="logo-footer.png" width="37" height="37"
                                             style="display: block; border: 0px;" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center"
-                                        style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 24px; padding: 5px 0 10px 0;">
-                                        <p
-                                            style="font-size: 14px; font-weight: 800; line-height: 18px; color: #333333;">
-                                            675 Parko Avenue<br>
-                                            LA, CA 02232
-                                        </p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="left"
-                                        style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 24px;">
-                                        <p
-                                            style="font-size: 14px; font-weight: 400; line-height: 20px; color: #777777;">
-                                            If you didn't create an account using this email address, please ignore this
-                                            email
-                                        </p>
                                     </td>
                                 </tr>
                             </table>
