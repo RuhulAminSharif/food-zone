@@ -42,7 +42,7 @@
             </ul>
             <ul class="menu_icon d-flex flex-wrap">
                 <li>
-                    <a href="#" class="menu_search"><i class="far fa-search"></i></a>
+                    <a href="#" class=""><i class="far fa-search"></i></a>
                     <div class="fp__search_form">
                         <form>
                             <span class="close_search"><i class="far fa-times"></i></span>
