@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Frontend;
 
-
+use App\Events\OrderPaymentUpdateEvent;
+use App\Events\OrderPlacedNotificationEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Services\OrderService;
@@ -44,7 +45,7 @@ class PaymentController extends Controller
     function makePayment(Request $request, OrderService $orderService)
     {
         $request->validate([
-            'payment_gateway' => ['required', 'string', 'in:paypal,stripe']
+            'payment_gateway' => ['required', 'string', 'in:paypal,stripe,razorpay']
         ]);
 
         /** Create Order */
@@ -148,6 +149,8 @@ class PaymentController extends Controller
                 'status' => 'completed'
             ];
 
+            OrderPaymentUpdateEvent::dispatch($orderId, $paymentInfo, 'PayPal');
+            OrderPlacedNotificationEvent::dispatch($orderId);
 
             /** Clear session data */
             $orderService->clearSession();
@@ -210,6 +213,8 @@ class PaymentController extends Controller
                 'status' => 'completed'
             ];
 
+            OrderPaymentUpdateEvent::dispatch($orderId, $paymentInfo, 'Stripe');
+            OrderPlacedNotificationEvent::dispatch($orderId);
 
             /** Clear session data */
             $orderService->clearSession();
@@ -225,7 +230,6 @@ class PaymentController extends Controller
         $this->transactionFailUpdateStatus('Stripe');
         return redirect()->route('payment.cancel');
     }
-
     function transactionFailUpdateStatus($gatewayName) : void {
         $orderId = session()->get('order_id');
         $paymentInfo = [
@@ -233,5 +237,7 @@ class PaymentController extends Controller
             'currency' => '',
             'status' => 'Failed'
         ];
+
+        OrderPaymentUpdateEvent::dispatch($orderId, $paymentInfo, $gatewayName);
     }
 }
