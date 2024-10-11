@@ -60,11 +60,11 @@
                                 </div>
                                 <div class="col-md-6 text-md-right">
                                     <address>
-                                        <strong>Order Status:</strong><br>
+                                        <strong>Order Status:</strong>
                                         @if ($order->order_status === 'delivered')
-                                            <span class="badge badge-success">Delivered</span>';
+                                            <span class="badge badge-success">Delivered</span>
                                         @elseif($order->order_status === 'declined')
-                                            <span class="badge badge-danger">Declined</span>';
+                                            <span class="badge badge-danger">Declined</span>
                                         @else
                                             <span class="badge badge-warning">{{ $order->order_status }}</span>
                                         @endif
@@ -225,8 +225,11 @@
                 printWindow.document.write('</body></html>');
                 printWindow.document.close();
 
-                printWindow.print();
-                printWindow.close();
+                // printWindow.print();
+                // printWindow.close();
+                printWindow.onload = function() {
+                    printWindow.print();
+                };
 
             })
         })
