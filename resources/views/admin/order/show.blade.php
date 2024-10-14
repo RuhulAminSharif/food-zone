@@ -196,9 +196,6 @@
                 </div>
                 <hr>
                 <div class="text-md-right">
-                    <div class="float-lg-left mb-lg-0 mb-3">
-
-                    </div>
                     <button class="btn btn-warning btn-icon icon-left" id="print_btn"><i class="fas fa-print"></i>
                         Print</button>
                 </div>
