@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'guest'], function () {
     Route::get('admin/login', [AdminAuthController::class, 'index'])->name('admin.login');
     Route::get('admin/forget-password',[AdminAuthController::class,'forgetPassword'])->name('admin.forget-password');
-}); 
+});
 
 
 Route::group(['middleware' => 'auth'],function(){
@@ -34,6 +34,9 @@ require __DIR__.'/auth.php';
 
 /** Show Home page */
 Route::get('/',[FrontendController::class,'index'])->name('home');
+
+/** Product page Route*/
+Route::get('/products', [FrontendController::class, 'products'])->name('product.index');
 
 /** Show Product details page */
 Route::get('/product/{slug}', [FrontendController::class, 'showProduct'])->name('product.show');

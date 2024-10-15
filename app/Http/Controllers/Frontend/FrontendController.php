@@ -43,6 +43,28 @@ class FrontendController extends Controller
         return SectionTitle::whereIn('key', $keys)->pluck('value','key');
     }
 
+    function products(Request $request) : View {
+
+        $products = Product::where(['status' => 1])->orderBy('id', 'DESC');
+
+        if($request->has('search') && $request->filled('search')) {
+            $products->where(function($query) use ($request) {
+                $query->where('name', 'like', '%'.$request->search.'%')
+                    ->orWhere('long_description', 'like', '%'.$request->search.'%');
+            });
+        }
+
+        if($request->has('category') && $request->filled('category')) {
+            $products->whereHas('category', function($query) use ($request){
+                $query->where('slug', $request->category);
+            });
+        }
+        $products = $products->paginate(12);
+        $categories = Category::where('status', 1)->get();
+
+        return view('frontend.pages.product', compact('products', 'categories'));
+    }
+
     function showProduct(string $slug) : View {
         $product = Product::with(['productImages', 'productSizes', 'productOptions'])->where(['slug' => $slug, 'status' => 1])
         ->firstOrFail();

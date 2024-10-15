@@ -13,7 +13,7 @@
                     <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">about</a>
+                    <a class="nav-link" href="{{ route('product.index') }}">products</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">menu</a>
@@ -24,13 +24,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">pages <i class="far fa-angle-down"></i></a>
                     <ul class="droap_menu">
-                        <li><a href="#">menu details</a></li>
+                        {{-- <li><a href="#">menu details</a></li>
                         <li><a href="#">blog details</a></li>
                         <li><a href="#">cart view</a></li>
                         <li><a href="#">checkout</a></li>
                         <li><a href="#">payment</a></li>
                         <li><a href="#">testimonial</a></li>
-                        <li><a href="#">search result</a></li>
+                        <li><a href="#">search result</a></li> --}}
                     </ul>
                 </li>
                 <li class="nav-item">
