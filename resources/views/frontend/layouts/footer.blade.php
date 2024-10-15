@@ -11,9 +11,9 @@
                             suffered.</span>
                         <p class="info"><i class="far fa-map-marker-alt"></i> Demo Address, Ctg</p>
                         <a class="info" href="#"><i class="fas fa-phone-alt"></i>
-                            018********</a>
+                            +49248876262</a>
                         <a class="info" href="#"><i class="fas fa-envelope"></i>
-                            example@gmail.com</a>
+                            food-zone@gmail.com</a>
                     </div>
                 </div>
                 <div class="col-lg-2 col-sm-4 col-md-6">

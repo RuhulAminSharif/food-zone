@@ -77,7 +77,7 @@
                             </form>
                             <p class="or"><span>or</span></p>
 
-                            <p class="create_account">Dont’t have an aceount ? <a href="{{ route('login') }}">login</a></p>
+                            <p class="create_account">Have an aceount ? <a href="{{ route('login') }}">login</a></p>
                         </div>
                     </div>
                 </div>

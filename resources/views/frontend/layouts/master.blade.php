@@ -62,7 +62,7 @@
                     <ul class="fp__topbar_info d-flex flex-wrap">
                         <li><a href="#"><i class="fas fa-envelope"></i> food-zone@gmail.com</a>
                         </li>
-                        <li><a href="#"><i class="fas fa-phone-alt"></i> +1034314934499332</a></li>
+                        <li><a href="#"><i class="fas fa-phone-alt"></i> +49248876262</a></li>
                     </ul>
                 </div>
                 <div class="col-xl-6 col-md-4 d-none d-md-block">

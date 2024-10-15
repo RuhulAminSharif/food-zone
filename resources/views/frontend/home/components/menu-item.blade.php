@@ -6,10 +6,10 @@
                     <h4>food Menu</h4>
                     <h2>Our Popular Delicious Foods</h2>
                     <span>
-                        <img src="{{ asset('fronted/images/heading_shapes.png') }}" alt="shapes" class="img-fluid w-100">
+                        <img src="{{ asset('frontend/images/heading_shapes.png') }}" alt="shapes"
+                            class="img-fluid w-100">
                     </span>
-                    <p>Objectively pontificate quality models before intuitive information. Dramatically
-                        recaptiualize multifunctional materials.</p>
+                    <p>Objectively pontificate quality models before intuitive information.</p>
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@
                                 <h5 class="price">
                                     @if ($product->offer_price > 0)
                                         {{ currencyPosition($product->offer_price) }}
-                                        <del> {{ currencyPosition($product->price) }}</del>
+                                        <del>{{ currencyPosition($product->price) }}</del>
                                     @else
                                         {{ currencyPosition($product->price) }}
                                     @endif
